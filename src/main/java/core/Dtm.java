@@ -17,8 +17,8 @@ public class Dtm {
     private static final String OUTPUT_FILE = "dtm_output.txt";
     private Map<State, Map<Symbol, Transition>> stringFunction;
     private final Map<State, Map<Symbol, Transition>> additionFunction;
-    private Map<State, Map<Symbol, Transition>> multiplicationFunction;
-    private Map<State, Map<Symbol, Transition>> subtractionFunction;
+    private final Map<State, Map<Symbol, Transition>> multiplicationFunction;
+    private final Map<State, Map<Symbol, Transition>> subtractionFunction;
 
     public Dtm(int size) {
         tape = new Tape(size);
@@ -26,6 +26,7 @@ public class Dtm {
         headPosition = 0;
         additionFunction = new AdditionFunction().initializeTransitionFunction();
         subtractionFunction = new SubtractionFunction().initializeTransitionFunction();
+        multiplicationFunction = new MultiplicationFunction().initializeTransitionFunction();
 
     }
     private void initializeTransitionFunction() {
@@ -99,14 +100,15 @@ public class Dtm {
     }
 
     public void runMultiplication(String input) {
-        Symbol[] multiplicationTape =  tape.initializeTape(input);
+        Symbol[] multiplicationTape =  tape.initializeMultiplicationTape(input);
         currentState = State.START_MULTIPLICATION_OPERATION;
 
         while (currentState != State.QY && currentState != State.QN) { // Process until halt or error
             Symbol currentSymbol = multiplicationTape[headPosition];
-            Transition transition = additionFunction.get(currentState).get(currentSymbol);
+            Transition transition = multiplicationFunction.get(currentState).get(currentSymbol);
             multiplicationTape[headPosition] = transition.getSymbol();
             printTapeState(multiplicationTape);
+            //System.out.println(currentState + "\n");
             headPosition += transition.getDirection().getMove();
 
             currentState = transition.getNextState();
@@ -116,7 +118,7 @@ public class Dtm {
     public void printTapeState(Symbol[] tape) {
         StringBuilder sb = new StringBuilder();
         Symbol symbol = tape[headPosition];
-        //sb.append(symbol.getValue()); // Append symbol value
+        sb.append(symbol.getValue()); // Append symbol value
         sb.append(Arrays.toString(tape)); // Append symbol value
 
         // Check if there's a transition for the current state and symbol

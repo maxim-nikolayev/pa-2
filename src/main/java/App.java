@@ -9,6 +9,7 @@ public class App {
         //dtm.runAddition("$101100101+101=");
         //dtm.runAddition("$101100101+101101101=");
         //dtm.runSubtraction("$101100101-101=");
-        dtm.runSubtraction("$101100101-101101=");
+        //dtm.runSubtraction("$101100101-101101=");
+        dtm.runMultiplication("$101*1101=");
     }
 }

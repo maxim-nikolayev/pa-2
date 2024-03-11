@@ -23,7 +23,7 @@ public class MultiplicationFunction implements TransitionFunction {
     }
     @Override
     public Map<State, Map<Symbol, Transition>> initializeTransitionFunction() {
-        transitionFunction.put(State.START_MULTIPLICATION_OPERATION, new StartAdditionOperationTransitionMap().getTransitionMap());
+        transitionFunction.put(State.START_MULTIPLICATION_OPERATION, new StartMultiplicationOperationTransitionMap().getTransitionMap());
         transitionFunction.put(State.Q_MULTIPLICATION_Y, new MultiplicationYTransitionMap().getTransitionMap());
         transitionFunction.put(State.Q_MULTIPLICATION_X_WITH_ZERO, new MultiplicationXWithZeroTransitionMap().getTransitionMap());
         transitionFunction.put(State.Q_MULTIPLICATION_X_WITH_ONE, new MultiplicationXWithOneTransitionMap().getTransitionMap());
